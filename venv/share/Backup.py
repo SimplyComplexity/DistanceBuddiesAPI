@@ -16,6 +16,7 @@ df.head()
 features = list(df.columns[:4])
 print(features)
 
+print("happyboi")
 
 with open('/Users/andyyeung/Downloads/Label2.csv', newline='') as csvfile:
     temp_reader = csv.reader(csvfile, delimiter=',')
