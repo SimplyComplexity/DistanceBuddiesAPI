@@ -74,6 +74,7 @@ class question_predict(Resource):
         if(float(chapter)) < max_chapter:
             combined_new = combined_new[combined_new['chapter_id'] == float(chapter)]
 
+
         x = combined_new[['chapter_id', 'difficulty','param_for_ai_diagram','param_for_ai_calc']]
         y = combined_new['Correct']
 
@@ -106,9 +107,9 @@ class question_predict(Resource):
 
             if predictionResult == 0:
 
-                questionValue = currentValue
                 #add the result to the list
-                post_predictionlist.append(questionValue)
+                post_predictionlist.append(currentValue)
+
 
             if currentValue == number_of_rows:
                 break
@@ -125,8 +126,16 @@ class question_predict(Resource):
             questionsLacking = 10 - post_predictionlist
             finalQuestion.append(random.sample(range(1, number_of_rows), questionsLacking))
 
+        randomthing = []
 
-        predictionResultsDataframe = DataFrame(finalQuestion, columns=['Prediction'])
+        for i in finalQuestion:
+            randomthing.append(questionbank.loc[questionbank['question_id'] == i])
+
+        print(randomthing)
+        randomthing = np.array(randomthing)
+       # randomthing = randomthing.reshape(randomthing, -1)
+        predictionResultsDataframe = DataFrame(randomthing, columns=['Prediction'])
+        print(predictionResultsDataframe)
 
         data = predictionResultsDataframe
         data = data.to_dict()  # convert dataframe to dictionary
